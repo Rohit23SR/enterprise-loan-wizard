@@ -1,0 +1,374 @@
+<div class="step-container" [@fadeIn]>
+  <div class="step-header">
+    <div class="header-content">
+      <div class="step-indicator">
+        <div class="step-circle">3</div>
+        <span class="step-badge">Step 3 of 5</span>
+      </div>
+      <h2>Financial Details</h2>
+      <p class="step-description">Provide information about your loan request and financial situation</p>
+    </div>
+  </div>
+
+  <form [formGroup]="financialForm" class="step-form">
+    <!-- Loan Request Card -->
+    <div class="form-card">
+      <div class="card-header">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M12 6v6l4 2"></path>
+        </svg>
+        <h3>Loan Request</h3>
+      </div>
+    <!-- Loan Amount -->
+    <div class="input-group">
+      <div class="input-wrapper">
+        <div class="input-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="1" x2="12" y2="23"></line>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+          </svg>
+        </div>
+        <div class="input-content">
+          <input
+            id="loanAmount"
+            type="number"
+            formControlName="loanAmount"
+            min="1000"
+            [class.error]="isFieldInvalid('loanAmount')"
+            [class.filled]="financialForm.get('loanAmount')?.value"
+            aria-required="true"
+          />
+          <label for="loanAmount" [class.active]="financialForm.get('loanAmount')?.value">
+            Loan Amount Requested <span class="required">*</span>
+          </label>
+        </div>
+      </div>
+      @if (isFieldInvalid('loanAmount')) {
+        <span class="error-message" role="alert">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+          </svg>
+          Loan amount is required (minimum $1,000)
+        </span>
+      }
+    </div>
+
+    <!-- Loan Purpose and Term -->
+    <div class="form-row">
+      <div class="input-group">
+        <div class="input-wrapper">
+          <div class="input-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 11l3 3L22 4"></path>
+              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+            </svg>
+          </div>
+          <div class="input-content">
+            <select
+              id="loanPurpose"
+              formControlName="loanPurpose"
+              [class.error]="isFieldInvalid('loanPurpose')"
+              [class.filled]="financialForm.get('loanPurpose')?.value"
+              aria-required="true"
+            >
+              <option value="">Select Purpose</option>
+              @for (purpose of loanPurposes; track purpose) {
+                <option [value]="purpose">{{ purpose }}</option>
+              }
+            </select>
+            <label for="loanPurpose" [class.active]="financialForm.get('loanPurpose')?.value">
+              Loan Purpose <span class="required">*</span>
+            </label>
+          </div>
+        </div>
+        @if (isFieldInvalid('loanPurpose')) {
+          <span class="error-message" role="alert">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+            </svg>
+            Loan purpose is required
+          </span>
+        }
+      </div>
+
+      <div class="input-group">
+        <div class="input-wrapper">
+          <div class="input-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+          </div>
+          <div class="input-content">
+            <select
+              id="desiredTerm"
+              formControlName="desiredTerm"
+              [class.error]="isFieldInvalid('desiredTerm')"
+              [class.filled]="financialForm.get('desiredTerm')?.value"
+              aria-required="true"
+            >
+              <option value="">Select Term</option>
+              @for (term of loanTerms; track term) {
+                <option [value]="term">{{ term }}</option>
+              }
+            </select>
+            <label for="desiredTerm" [class.active]="financialForm.get('desiredTerm')?.value">
+              Desired Loan Term <span class="required">*</span>
+            </label>
+          </div>
+        </div>
+        @if (isFieldInvalid('desiredTerm')) {
+          <span class="error-message" role="alert">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+            </svg>
+            Loan term is required
+          </span>
+        }
+      </div>
+    </div>
+
+    <!-- Monthly Revenue and Expenses -->
+    <div class="form-row">
+      <div class="input-group">
+        <div class="input-wrapper">
+          <div class="input-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="1" x2="12" y2="23"></line>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+          </div>
+          <div class="input-content">
+            <input
+              id="avgMonthlyRevenue"
+              type="number"
+              formControlName="avgMonthlyRevenue"
+              min="0"
+              [class.error]="isFieldInvalid('avgMonthlyRevenue')"
+              [class.filled]="financialForm.get('avgMonthlyRevenue')?.value"
+              aria-required="true"
+            />
+            <label for="avgMonthlyRevenue" [class.active]="financialForm.get('avgMonthlyRevenue')?.value">
+              Average Monthly Revenue <span class="required">*</span>
+            </label>
+          </div>
+        </div>
+        @if (isFieldInvalid('avgMonthlyRevenue')) {
+          <span class="error-message" role="alert">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+            </svg>
+            Monthly revenue is required
+          </span>
+        }
+      </div>
+
+      <div class="input-group">
+        <div class="input-wrapper">
+          <div class="input-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="8.5" cy="7" r="4"></circle>
+              <line x1="20" y1="8" x2="20" y2="14"></line>
+              <line x1="23" y1="11" x2="17" y2="11"></line>
+            </svg>
+          </div>
+          <div class="input-content">
+            <input
+              id="monthlyExpenses"
+              type="number"
+              formControlName="monthlyExpenses"
+              min="0"
+              [class.error]="isFieldInvalid('monthlyExpenses')"
+              [class.filled]="financialForm.get('monthlyExpenses')?.value"
+              aria-required="true"
+            />
+            <label for="monthlyExpenses" [class.active]="financialForm.get('monthlyExpenses')?.value">
+              Monthly Expenses <span class="required">*</span>
+            </label>
+          </div>
+        </div>
+        @if (isFieldInvalid('monthlyExpenses')) {
+          <span class="error-message" role="alert">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+            </svg>
+            Monthly expenses is required
+          </span>
+        }
+      </div>
+    </div>
+
+    <!-- Existing Debt and Credit Score -->
+    <div class="form-row">
+      <div class="input-group">
+        <div class="input-wrapper">
+          <div class="input-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+              <line x1="1" y1="10" x2="23" y2="10"></line>
+            </svg>
+          </div>
+          <div class="input-content">
+            <input
+              id="existingDebt"
+              type="number"
+              formControlName="existingDebt"
+              min="0"
+              [class.error]="isFieldInvalid('existingDebt')"
+              [class.filled]="financialForm.get('existingDebt')?.value"
+              aria-required="true"
+            />
+            <label for="existingDebt" [class.active]="financialForm.get('existingDebt')?.value">
+              Existing Debt <span class="required">*</span>
+            </label>
+          </div>
+        </div>
+        @if (isFieldInvalid('existingDebt')) {
+          <span class="error-message" role="alert">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+            </svg>
+            Existing debt is required
+          </span>
+        }
+      </div>
+
+      <div class="input-group">
+        <div class="input-wrapper">
+          <div class="input-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+          </div>
+          <div class="input-content">
+            <select
+              id="creditScoreRange"
+              formControlName="creditScoreRange"
+              [class.error]="isFieldInvalid('creditScoreRange')"
+              [class.filled]="financialForm.get('creditScoreRange')?.value"
+              aria-required="true"
+            >
+              <option value="">Select Range</option>
+              @for (range of creditScoreRanges; track range) {
+                <option [value]="range">{{ range }}</option>
+              }
+            </select>
+            <label for="creditScoreRange" [class.active]="financialForm.get('creditScoreRange')?.value">
+              Credit Score Range <span class="required">*</span>
+            </label>
+          </div>
+        </div>
+        @if (isFieldInvalid('creditScoreRange')) {
+          <span class="error-message" role="alert">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+            </svg>
+            Credit score range is required
+          </span>
+        }
+      </div>
+    </div>
+    </div>
+    <!-- End Loan Request Card -->
+
+    <!-- Collateral Information Card -->
+    <div class="form-card">
+      <div class="card-header">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+          <circle cx="12" cy="10" r="3"></circle>
+        </svg>
+        <h3>Collateral Information</h3>
+      </div>
+
+    <div class="checkbox-wrapper">
+      <input
+        id="hasCollateral"
+        type="checkbox"
+        formControlName="hasCollateral"
+      />
+      <label for="hasCollateral">
+        I have collateral to offer for this loan
+      </label>
+    </div>
+
+    @if (financialForm.get('hasCollateral')?.value) {
+      <div class="collateral-fields">
+        <div class="form-row">
+          <div class="input-group">
+            <div class="input-wrapper">
+              <div class="input-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+              </div>
+              <div class="input-content">
+                <select
+                  id="collateralType"
+                  formControlName="collateralType"
+                  [class.error]="isFieldInvalid('collateralType')"
+                  [class.filled]="financialForm.get('collateralType')?.value"
+                  aria-required="true"
+                >
+                  <option value="">Select Type</option>
+                  @for (type of collateralTypes; track type) {
+                    <option [value]="type">{{ type }}</option>
+                  }
+                </select>
+                <label for="collateralType" [class.active]="financialForm.get('collateralType')?.value">
+                  Collateral Type <span class="required">*</span>
+                </label>
+              </div>
+            </div>
+            @if (isFieldInvalid('collateralType')) {
+              <span class="error-message" role="alert">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                </svg>
+                Collateral type is required
+              </span>
+            }
+          </div>
+
+          <div class="input-group">
+            <div class="input-wrapper">
+              <div class="input-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="1" x2="12" y2="23"></line>
+                  <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                </svg>
+              </div>
+              <div class="input-content">
+                <input
+                  id="collateralValue"
+                  type="number"
+                  formControlName="collateralValue"
+                  min="1"
+                  [class.error]="isFieldInvalid('collateralValue')"
+                  [class.filled]="financialForm.get('collateralValue')?.value"
+                  aria-required="true"
+                />
+                <label for="collateralValue" [class.active]="financialForm.get('collateralValue')?.value">
+                  Estimated Collateral Value <span class="required">*</span>
+                </label>
+              </div>
+            </div>
+            @if (isFieldInvalid('collateralValue')) {
+              <span class="error-message" role="alert">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                </svg>
+                Collateral value is required
+              </span>
+            }
+          </div>
+        </div>
+      </div>
+    }
+    </div>
+    <!-- End Collateral Information Card -->
+  </form>
+</div>

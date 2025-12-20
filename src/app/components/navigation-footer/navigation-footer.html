@@ -1,0 +1,69 @@
+<div class="navigation-footer">
+  <button
+    type="button"
+    class="btn btn-secondary"
+    (click)="onBack()"
+    [disabled]="isFirstStep"
+    [attr.aria-label]="isFirstStep ? 'Back button disabled (first step)' : 'Go back to previous step'"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <polyline points="15 18 9 12 15 6"></polyline>
+    </svg>
+    Back
+  </button>
+
+  <div class="center-actions">
+    @if (showSaveExit) {
+      <button
+        type="button"
+        class="btn btn-text"
+        (click)="onSaveExit()"
+        aria-label="Save progress and exit wizard"
+      >
+        Save & Exit
+      </button>
+    }
+  </div>
+
+  <button
+    type="button"
+    class="btn btn-primary"
+    (click)="onContinue()"
+    [disabled]="continueDisabled || isSubmitting"
+    [attr.aria-label]="isLastStep ? 'Submit application' : 'Continue to next step'"
+  >
+    @if (isSubmitting) {
+      <span class="spinner" aria-hidden="true"></span>
+      <span>{{ submitButtonText }}</span>
+    } @else {
+      <span>{{ isLastStep ? 'Submit Application' : 'Continue' }}</span>
+      @if (!isLastStep) {
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      }
+    }
+  </button>
+</div>

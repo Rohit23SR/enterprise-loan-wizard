@@ -1,0 +1,56 @@
+<div class="success-container" @fadeInScale>
+  <div class="success-card card">
+    <div class="success-icon">
+      <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="40" cy="40" r="40" fill="#10B981"/>
+        <path d="M25 40L35 50L55 30" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+
+    <h1>Application Submitted!</h1>
+
+    <p class="success-message">
+      Your loan application has been received and is being reviewed by our team.
+      You'll receive an email confirmation shortly.
+    </p>
+
+    <div class="reference-section">
+      <span class="reference-label">Reference Number</span>
+      <span class="reference-number">{{ referenceNumber }}</span>
+    </div>
+
+    <div class="action-buttons">
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="downloadReceipt()"
+        aria-label="Download PDF receipt"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+        Download PDF Receipt
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="returnToDashboard()"
+        aria-label="Return to home page"
+      >
+        Return to Home
+      </button>
+    </div>
+
+    <div class="next-steps">
+      <h3>What Happens Next?</h3>
+      <ul>
+        <li>Our team will review your application within 2-3 business days</li>
+        <li>You'll receive an email with next steps and any additional information needed</li>
+        <li>You can track your application status using your reference number</li>
+      </ul>
+    </div>
+  </div>
+</div>

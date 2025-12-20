@@ -1,0 +1,235 @@
+<div class="step-container" [@fadeIn]>
+  <div class="step-header">
+    <span class="step-badge" aria-label="Step 4 of 5">4/5</span>
+    <h2>Document Upload</h2>
+    <p class="text-gray-500">Upload required documents for your loan application</p>
+  </div>
+
+  <form [formGroup]="documentForm" class="step-form">
+    <!-- Government ID -->
+    <div class="form-group">
+      <label>
+        Government-Issued ID <span class="required">*</span>
+      </label>
+      <p class="helper-text">Upload a copy of your driver's license, passport, or state ID</p>
+
+      <div class="file-upload-wrapper">
+        <input
+          type="file"
+          id="governmentId"
+          (change)="onFileSelected($event, 'governmentId')"
+          accept="image/*,.pdf"
+          multiple
+          class="file-input"
+        />
+        <label for="governmentId" class="file-label">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+          Choose Files ({{ governmentIdFiles.length }} selected)
+        </label>
+      </div>
+
+      @if (governmentIdFiles.length > 0) {
+        <div class="file-list">
+          @for (file of governmentIdFiles; track $index; let i = $index) {
+            <div class="file-item">
+              <span class="file-name">{{ file.name }}</span>
+              <span class="file-size">{{ formatFileSize(file.size) }}</span>
+              <button type="button" (click)="removeFile('governmentId', i)" class="remove-btn">Remove</button>
+            </div>
+          }
+        </div>
+      }
+
+      @if (isFieldInvalid('governmentId')) {
+        <span class="error-message" role="alert">At least one government ID is required</span>
+      }
+    </div>
+
+    <!-- Business Registration -->
+    <div class="form-group">
+      <label>
+        Business Registration Documents <span class="required">*</span>
+      </label>
+      <p class="helper-text">Articles of incorporation, LLC formation, or business license</p>
+
+      <div class="file-upload-wrapper">
+        <input
+          type="file"
+          id="businessRegistration"
+          (change)="onFileSelected($event, 'businessRegistration')"
+          accept=".pdf,.doc,.docx"
+          multiple
+          class="file-input"
+        />
+        <label for="businessRegistration" class="file-label">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+          Choose Files ({{ businessRegistrationFiles.length }} selected)
+        </label>
+      </div>
+
+      @if (businessRegistrationFiles.length > 0) {
+        <div class="file-list">
+          @for (file of businessRegistrationFiles; track $index; let i = $index) {
+            <div class="file-item">
+              <span class="file-name">{{ file.name }}</span>
+              <span class="file-size">{{ formatFileSize(file.size) }}</span>
+              <button type="button" (click)="removeFile('businessRegistration', i)" class="remove-btn">Remove</button>
+            </div>
+          }
+        </div>
+      }
+
+      @if (isFieldInvalid('businessRegistration')) {
+        <span class="error-message" role="alert">Business registration documents are required</span>
+      }
+    </div>
+
+    <!-- Bank Statements -->
+    <div class="form-group">
+      <label>
+        Bank Statements <span class="required">*</span>
+      </label>
+      <p class="helper-text">Upload at least 3 months of recent business bank statements</p>
+
+      <div class="file-upload-wrapper">
+        <input
+          type="file"
+          id="bankStatements"
+          (change)="onFileSelected($event, 'bankStatements')"
+          accept=".pdf"
+          multiple
+          class="file-input"
+        />
+        <label for="bankStatements" class="file-label">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+          Choose Files ({{ bankStatementFiles.length }}/3 minimum)
+        </label>
+      </div>
+
+      @if (bankStatementFiles.length > 0) {
+        <div class="file-list">
+          @for (file of bankStatementFiles; track $index; let i = $index) {
+            <div class="file-item">
+              <span class="file-name">{{ file.name }}</span>
+              <span class="file-size">{{ formatFileSize(file.size) }}</span>
+              <button type="button" (click)="removeFile('bankStatements', i)" class="remove-btn">Remove</button>
+            </div>
+          }
+        </div>
+      }
+
+      @if (isFieldInvalid('bankStatements')) {
+        <span class="error-message" role="alert">At least 3 months of bank statements are required</span>
+      }
+    </div>
+
+    <!-- Tax Returns -->
+    <div class="form-group">
+      <label>
+        Tax Returns <span class="required">*</span>
+      </label>
+      <p class="helper-text">Upload at least 2 years of business tax returns</p>
+
+      <div class="file-upload-wrapper">
+        <input
+          type="file"
+          id="taxReturns"
+          (change)="onFileSelected($event, 'taxReturns')"
+          accept=".pdf"
+          multiple
+          class="file-input"
+        />
+        <label for="taxReturns" class="file-label">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+          Choose Files ({{ taxReturnFiles.length }}/2 minimum)
+        </label>
+      </div>
+
+      @if (taxReturnFiles.length > 0) {
+        <div class="file-list">
+          @for (file of taxReturnFiles; track $index; let i = $index) {
+            <div class="file-item">
+              <span class="file-name">{{ file.name }}</span>
+              <span class="file-size">{{ formatFileSize(file.size) }}</span>
+              <button type="button" (click)="removeFile('taxReturns', i)" class="remove-btn">Remove</button>
+            </div>
+          }
+        </div>
+      }
+
+      @if (isFieldInvalid('taxReturns')) {
+        <span class="error-message" role="alert">At least 2 years of tax returns are required</span>
+      }
+    </div>
+
+    <!-- Additional Documents (Optional) -->
+    <div class="form-group">
+      <label>
+        Additional Documents (Optional)
+      </label>
+      <p class="helper-text">Any other supporting documents (profit & loss statements, contracts, etc.)</p>
+
+      <div class="file-upload-wrapper">
+        <input
+          type="file"
+          id="additionalDocs"
+          (change)="onFileSelected($event, 'additionalDocs')"
+          accept=".pdf,.doc,.docx,image/*"
+          multiple
+          class="file-input"
+        />
+        <label for="additionalDocs" class="file-label">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+          Choose Files
+        </label>
+      </div>
+
+      @if (additionalFiles.length > 0) {
+        <div class="file-list">
+          @for (file of additionalFiles; track $index; let i = $index) {
+            <div class="file-item">
+              <span class="file-name">{{ file.name }}</span>
+              <span class="file-size">{{ formatFileSize(file.size) }}</span>
+              <button type="button" (click)="removeFile('additionalDocs', i)" class="remove-btn">Remove</button>
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+    <div class="info-box">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+      </svg>
+      <div>
+        <strong>Document Requirements:</strong>
+        <ul>
+          <li>All documents must be clear and legible</li>
+          <li>Accepted formats: PDF, DOC, DOCX, JPG, PNG</li>
+          <li>Maximum file size: 10MB per file</li>
+          <li>Documents must be current (within last 3 months)</li>
+        </ul>
+      </div>
+    </div>
+  </form>
+</div>

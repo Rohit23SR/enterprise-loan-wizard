@@ -1,0 +1,216 @@
+<div class="step-container" [@fadeIn]>
+  <div class="step-header">
+    <span class="step-badge" aria-label="Step 5 of 5">5/5</span>
+    <h2>Review & Submit</h2>
+    <p class="text-gray-500">Review your application and submit</p>
+  </div>
+
+  <div class="review-sections">
+    <!-- Personal Information Summary -->
+    <div class="review-section">
+      <h3>Personal Information</h3>
+      <div class="review-grid">
+        <div class="review-item">
+          <span class="review-label">Full Name:</span>
+          <span class="review-value">{{ personalInfo.fullName || 'N/A' }}</span>
+        </div>
+        <div class="review-item">
+          <span class="review-label">Email:</span>
+          <span class="review-value">{{ personalInfo.email || 'N/A' }}</span>
+        </div>
+        <div class="review-item">
+          <span class="review-label">Phone:</span>
+          <span class="review-value">{{ personalInfo.phone || 'N/A' }}</span>
+        </div>
+        <div class="review-item">
+          <span class="review-label">Date of Birth:</span>
+          <span class="review-value">{{ formatDate(personalInfo.dateOfBirth) }}</span>
+        </div>
+        <div class="review-item">
+          <span class="review-label">TFN:</span>
+          <span class="review-value">{{ maskTFN(personalInfo.tfn) }}</span>
+        </div>
+        <div class="review-item">
+          <span class="review-label">Address:</span>
+          <span class="review-value">
+            {{ personalInfo.streetAddress }}, {{ personalInfo.city }}, {{ personalInfo.state }} {{ personalInfo.postcode }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Business Information Summary -->
+    <div class="review-section">
+      <h3>Business Information</h3>
+      <div class="review-grid">
+        <div class="review-item">
+          <span class="review-label">Business Name:</span>
+          <span class="review-value">{{ businessInfo.businessName || 'N/A' }}</span>
+        </div>
+        <div class="review-item">
+          <span class="review-label">Business Type:</span>
+          <span class="review-value">{{ businessInfo.businessType || 'N/A' }}</span>
+        </div>
+        <div class="review-item">
+          <span class="review-label">Industry:</span>
+          <span class="review-value">{{ businessInfo.industry || 'N/A' }}</span>
+        </div>
+        <div class="review-item">
+          <span class="review-label">Years in Business:</span>
+          <span class="review-value">{{ businessInfo.yearsInBusiness || 'N/A' }}</span>
+        </div>
+        <div class="review-item">
+          <span class="review-label">ABN:</span>
+          <span class="review-value">{{ maskABN(businessInfo.abn) }}</span>
+        </div>
+        <div class="review-item">
+          <span class="review-label">Annual Revenue:</span>
+          <span class="review-value">{{ formatCurrency(businessInfo.annualRevenue) }}</span>
+        </div>
+        <div class="review-item">
+          <span class="review-label">Employees:</span>
+          <span class="review-value">{{ businessInfo.numberOfEmployees || 'N/A' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Financial Details Summary -->
+    <div class="review-section">
+      <h3>Financial Details</h3>
+      <div class="review-grid">
+        <div class="review-item">
+          <span class="review-label">Loan Amount:</span>
+          <span class="review-value">{{ formatCurrency(financialDetails.loanAmount) }}</span>
+        </div>
+        <div class="review-item">
+          <span class="review-label">Loan Purpose:</span>
+          <span class="review-value">{{ financialDetails.loanPurpose || 'N/A' }}</span>
+        </div>
+        <div class="review-item">
+          <span class="review-label">Loan Term:</span>
+          <span class="review-value">{{ financialDetails.desiredTerm || 'N/A' }}</span>
+        </div>
+        <div class="review-item">
+          <span class="review-label">Avg Monthly Revenue:</span>
+          <span class="review-value">{{ formatCurrency(financialDetails.avgMonthlyRevenue) }}</span>
+        </div>
+        <div class="review-item">
+          <span class="review-label">Monthly Expenses:</span>
+          <span class="review-value">{{ formatCurrency(financialDetails.monthlyExpenses) }}</span>
+        </div>
+        <div class="review-item">
+          <span class="review-label">Existing Debt:</span>
+          <span class="review-value">{{ formatCurrency(financialDetails.existingDebt) }}</span>
+        </div>
+        <div class="review-item">
+          <span class="review-label">Credit Score Range:</span>
+          <span class="review-value">{{ financialDetails.creditScoreRange || 'N/A' }}</span>
+        </div>
+        @if (financialDetails.hasCollateral) {
+          <div class="review-item">
+            <span class="review-label">Collateral Type:</span>
+            <span class="review-value">{{ financialDetails.collateralType || 'N/A' }}</span>
+          </div>
+          <div class="review-item">
+            <span class="review-label">Collateral Value:</span>
+            <span class="review-value">{{ formatCurrency(financialDetails.collateralValue) }}</span>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Documents Summary -->
+    <div class="review-section">
+      <h3>Documents Uploaded</h3>
+      <div class="review-grid">
+        <div class="review-item">
+          <span class="review-label">Government ID:</span>
+          <span class="review-value">{{ getFileCount(documents.governmentId) }} file(s)</span>
+        </div>
+        <div class="review-item">
+          <span class="review-label">Business Registration:</span>
+          <span class="review-value">{{ getFileCount(documents.businessRegistration) }} file(s)</span>
+        </div>
+        <div class="review-item">
+          <span class="review-label">Bank Statements:</span>
+          <span class="review-value">{{ getFileCount(documents.bankStatements) }} file(s)</span>
+        </div>
+        <div class="review-item">
+          <span class="review-label">Tax Returns:</span>
+          <span class="review-value">{{ getFileCount(documents.taxReturns) }} file(s)</span>
+        </div>
+        @if (getFileCount(documents.additionalDocs) > 0) {
+          <div class="review-item">
+            <span class="review-label">Additional Documents:</span>
+            <span class="review-value">{{ getFileCount(documents.additionalDocs) }} file(s)</span>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Certifications and Consents -->
+    <div class="confirmation-section">
+      <h3>Final Confirmation</h3>
+      <p>Please review all information above carefully before submitting. By checking the boxes below, you confirm your agreement to proceed with this loan application.</p>
+
+      <form [formGroup]="reviewForm" class="consent-form">
+        <div class="checkbox-wrapper">
+          <input
+            id="certifyAccurate"
+            type="checkbox"
+            formControlName="certifyAccurate"
+          />
+          <label for="certifyAccurate">
+            I certify that all information provided in this application is true, accurate, and complete to the best of my knowledge.
+            <span class="required">*</span>
+          </label>
+        </div>
+
+        <div class="checkbox-wrapper">
+          <input
+            id="agreeToTerms"
+            type="checkbox"
+            formControlName="agreeToTerms"
+          />
+          <label for="agreeToTerms">
+            I have read, understand, and agree to the Terms and Conditions and Privacy Policy.
+            <span class="required">*</span>
+          </label>
+        </div>
+
+        <div class="checkbox-wrapper">
+          <input
+            id="consentToCreditCheck"
+            type="checkbox"
+            formControlName="consentToCreditCheck"
+          />
+          <label for="consentToCreditCheck">
+            I authorize the lender to obtain my credit report and verify the information provided in this application.
+            <span class="required">*</span>
+          </label>
+        </div>
+
+        @if (reviewForm.touched && !reviewForm.valid) {
+          <div class="alert-box" role="alert">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+            </svg>
+            <p>You must agree to all certifications and consents to submit your application.</p>
+          </div>
+        }
+      </form>
+    </div>
+
+    <div class="next-steps-section">
+      <div class="next-steps-content">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="info-icon">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+        </svg>
+        <div class="next-steps-text">
+          <strong class="next-steps-title">What happens next?</strong>
+          <p class="next-steps-description">After submitting your application, our team will review your information within 1-2 business days. You'll receive an email notification with the status of your application and any next steps.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

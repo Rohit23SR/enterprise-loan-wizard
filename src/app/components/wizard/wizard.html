@@ -1,0 +1,49 @@
+<div class="wizard-container">
+  <div class="wizard-card card">
+    <!-- Page Title -->
+    <header class="wizard-header">
+      <h1>Enterprise Loan Application</h1>
+      <p class="text-gray-500">Complete all steps to submit your loan application</p>
+    </header>
+
+    <!-- Progress Stepper -->
+    <app-progress-stepper
+      [steps]="wizardState.steps"
+      [currentStep]="wizardState.currentStep()"
+      (stepClick)="onStepClick($event)"
+    ></app-progress-stepper>
+
+    <!-- Step Content -->
+    <div class="step-content">
+      @switch (wizardState.currentStep()) {
+        @case (0) {
+          <app-personal-info></app-personal-info>
+        }
+        @case (1) {
+          <app-business-info></app-business-info>
+        }
+        @case (2) {
+          <app-financial-details></app-financial-details>
+        }
+        @case (3) {
+          <app-document-upload></app-document-upload>
+        }
+        @case (4) {
+          <app-review-submit></app-review-submit>
+        }
+      }
+    </div>
+
+    <!-- Navigation Footer -->
+    <app-navigation-footer
+      [isFirstStep]="wizardState.isFirstStep()"
+      [isLastStep]="wizardState.isLastStep()"
+      [continueDisabled]="isContinueDisabled"
+      [isSubmitting]="isSubmitting"
+      [submitButtonText]="continueButtonText"
+      (back)="onBack()"
+      (continue)="onContinue()"
+      (saveExit)="onSaveExit()"
+    ></app-navigation-footer>
+  </div>
+</div>

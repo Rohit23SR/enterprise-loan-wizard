@@ -1,0 +1,393 @@
+<div class="step-container" [@fadeIn]>
+  <div class="step-header">
+    <div class="header-content">
+      <div class="step-indicator">
+        <div class="step-circle">1</div>
+        <span class="step-badge">Step 1 of 5</span>
+      </div>
+      <h2>Personal Information</h2>
+      <p class="step-description">Tell us about yourself to get started</p>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" [style.width.%]="(personalForm.valid ? 100 : 0)"></div>
+    </div>
+  </div>
+
+  <form [formGroup]="personalForm" class="step-form">
+    <!-- Personal Details Card -->
+    <div class="form-card">
+      <div class="card-header">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+        </svg>
+        <h3>Personal Details</h3>
+      </div>
+
+      <!-- Full Name -->
+      <div class="input-group">
+        <div class="input-wrapper">
+          <div class="input-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
+          <div class="input-content">
+            <label for="fullName" [class.active]="personalForm.get('fullName')?.value || personalForm.get('fullName')?.touched">
+              Full Name <span class="required">*</span>
+            </label>
+            <input
+              id="fullName"
+              type="text"
+              formControlName="fullName"
+              [class.error]="isFieldInvalid('fullName')"
+              [class.filled]="personalForm.get('fullName')?.value"
+              aria-required="true"
+            />
+          </div>
+        </div>
+        @if (isFieldInvalid('fullName')) {
+          <span class="error-message" role="alert">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+            </svg>
+            Full name is required
+          </span>
+        }
+      </div>
+
+      <!-- Email and Phone Row -->
+      <div class="form-row">
+        <div class="input-group">
+          <div class="input-wrapper">
+            <div class="input-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+                <path d="M3 8l9 6 9-6"></path>
+              </svg>
+            </div>
+            <div class="input-content">
+              <label for="email" [class.active]="personalForm.get('email')?.value || personalForm.get('email')?.touched">
+                Email Address <span class="required">*</span>
+              </label>
+              <input
+                id="email"
+                type="email"
+                formControlName="email"
+                [class.error]="isFieldInvalid('email')"
+                [class.filled]="personalForm.get('email')?.value"
+                aria-required="true"
+              />
+            </div>
+          </div>
+          @if (isFieldInvalid('email')) {
+            <span class="error-message" role="alert">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+              </svg>
+              @if (personalForm.get('email')?.errors?.['required']) {
+                Email is required
+              } @else if (personalForm.get('email')?.errors?.['email']) {
+                Please enter a valid email address
+              }
+            </span>
+          }
+        </div>
+
+        <div class="input-group">
+          <div class="input-wrapper">
+            <div class="input-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+            </div>
+            <div class="input-content">
+              <label for="phone" [class.active]="personalForm.get('phone')?.value || personalForm.get('phone')?.touched">
+                Phone Number <span class="required">*</span>
+              </label>
+              <input
+                id="phone"
+                type="tel"
+                formControlName="phone"
+                mask="0000 000 000"
+                [class.error]="isFieldInvalid('phone')"
+                [class.filled]="personalForm.get('phone')?.value"
+                aria-required="true"
+              />
+            </div>
+          </div>
+          @if (isFieldInvalid('phone')) {
+            <span class="error-message" role="alert">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+              </svg>
+              Phone number is required
+            </span>
+          }
+        </div>
+      </div>
+
+      <!-- Date of Birth and TFN Row -->
+      <div class="form-row">
+        <div class="input-group">
+          <div class="input-wrapper">
+            <div class="input-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+            </div>
+            <div class="input-content">
+              <label for="dateOfBirth" [class.active]="personalForm.get('dateOfBirth')?.value || personalForm.get('dateOfBirth')?.touched">
+                Date of Birth <span class="required">*</span>
+              </label>
+              <input
+                id="dateOfBirth"
+                type="date"
+                formControlName="dateOfBirth"
+                [class.error]="isFieldInvalid('dateOfBirth')"
+                [class.filled]="personalForm.get('dateOfBirth')?.value"
+                aria-required="true"
+              />
+            </div>
+          </div>
+          @if (isFieldInvalid('dateOfBirth')) {
+            <span class="error-message" role="alert">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+              </svg>
+              @if (personalForm.get('dateOfBirth')?.errors?.['required']) {
+                Date of birth is required
+              } @else if (personalForm.get('dateOfBirth')?.errors?.['underAge']) {
+                You must be at least 18 years old
+              }
+            </span>
+          }
+        </div>
+
+        <div class="input-group">
+          <div class="input-wrapper">
+            <div class="input-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <path d="M14 2v6h6"></path>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <line x1="10" y1="9" x2="8" y2="9"></line>
+              </svg>
+            </div>
+            <div class="input-content">
+              <label for="tfn" [class.active]="personalForm.get('tfn')?.value || personalForm.get('tfn')?.touched">
+                Tax File Number (TFN) <span class="required">*</span>
+              </label>
+              <input
+                id="tfn"
+                type="text"
+                formControlName="tfn"
+                mask="000 000 000"
+                [class.error]="isFieldInvalid('tfn')"
+                [class.filled]="personalForm.get('tfn')?.value"
+                aria-required="true"
+              />
+            </div>
+          </div>
+          @if (isFieldInvalid('tfn')) {
+            <span class="error-message" role="alert">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+              </svg>
+              Valid TFN is required (9 digits)
+            </span>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Address Card -->
+    <div class="form-card address-card">
+      <div class="section-header">
+        <div class="section-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <path d="M9 22V12h6v10"></path>
+          </svg>
+        </div>
+        <h3>Address Information</h3>
+      </div>
+
+      <!-- Street Address -->
+      <div class="input-group">
+        <div class="input-wrapper">
+          <div class="input-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+          </div>
+          <div class="input-content">
+            <label for="streetAddress" [class.active]="personalForm.get('streetAddress')?.value || personalForm.get('streetAddress')?.touched">
+              Street Address <span class="required">*</span>
+            </label>
+            <input
+              id="streetAddress"
+              type="text"
+              formControlName="streetAddress"
+              [class.error]="isFieldInvalid('streetAddress')"
+              [class.filled]="personalForm.get('streetAddress')?.value"
+              aria-required="true"
+            />
+          </div>
+        </div>
+        @if (isFieldInvalid('streetAddress')) {
+          <span class="error-message" role="alert">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+            </svg>
+            Street address is required
+          </span>
+        }
+      </div>
+
+      <!-- City and State Row -->
+      <div class="form-row">
+        <div class="input-group">
+          <div class="input-wrapper">
+            <div class="input-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              </svg>
+            </div>
+            <div class="input-content">
+              <label for="city" [class.active]="personalForm.get('city')?.value || personalForm.get('city')?.touched">
+                City <span class="required">*</span>
+              </label>
+              <input
+                id="city"
+                type="text"
+                formControlName="city"
+                [class.error]="isFieldInvalid('city')"
+                [class.filled]="personalForm.get('city')?.value"
+                aria-required="true"
+              />
+            </div>
+          </div>
+          @if (isFieldInvalid('city')) {
+            <span class="error-message" role="alert">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+              </svg>
+              City is required
+            </span>
+          }
+        </div>
+
+        <div class="input-group">
+          <div class="input-wrapper select-wrapper">
+            <div class="input-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+            </div>
+            <div class="input-content">
+              <select
+                id="state"
+                formControlName="state"
+                [class.error]="isFieldInvalid('state')"
+                [class.filled]="personalForm.get('state')?.value"
+                aria-required="true"
+                aria-label="State/Territory"
+              >
+                <option value="">Select State/Territory</option>
+                @for (state of states; track state.code) {
+                  <option [value]="state.code">{{ state.name }}</option>
+                }
+              </select>
+            </div>
+          </div>
+          @if (isFieldInvalid('state')) {
+            <span class="error-message" role="alert">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+              </svg>
+              State/Territory is required
+            </span>
+          }
+        </div>
+      </div>
+
+      <!-- Postcode and Country Row -->
+      <div class="form-row">
+        <div class="input-group">
+          <div class="input-wrapper">
+            <div class="input-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+            </div>
+            <div class="input-content">
+              <label for="postcode" [class.active]="personalForm.get('postcode')?.value || personalForm.get('postcode')?.touched">
+                Postcode <span class="required">*</span>
+              </label>
+              <input
+                id="postcode"
+                type="text"
+                formControlName="postcode"
+                mask="0000"
+                [class.error]="isFieldInvalid('postcode')"
+                [class.filled]="personalForm.get('postcode')?.value"
+                aria-required="true"
+              />
+            </div>
+          </div>
+          @if (isFieldInvalid('postcode')) {
+            <span class="error-message" role="alert">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+              </svg>
+              Valid 4-digit postcode is required
+            </span>
+          }
+        </div>
+
+        <div class="input-group">
+          <div class="input-wrapper select-wrapper">
+            <div class="input-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M2 12h20"></path>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+              </svg>
+            </div>
+            <div class="input-content">
+              <select
+                id="country"
+                formControlName="country"
+                [class.error]="isFieldInvalid('country')"
+                [class.filled]="personalForm.get('country')?.value"
+                aria-required="true"
+                aria-label="Country"
+              >
+                <option value="">Select Country</option>
+                @for (country of countries; track country.code) {
+                  <option [value]="country.code">{{ country.name }}</option>
+                }
+              </select>
+            </div>
+          </div>
+          @if (isFieldInvalid('country')) {
+            <span class="error-message" role="alert">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+              </svg>
+              Country is required
+            </span>
+          }
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

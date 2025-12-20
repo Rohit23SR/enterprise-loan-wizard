@@ -1,0 +1,44 @@
+.wizard-container {
+  min-height: 100vh;
+  padding: var(--spacing-lg);
+
+  @media (min-width: 1024px) {
+    padding: var(--spacing-2xl);
+  }
+}
+
+.wizard-card {
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.wizard-header {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+
+  h1 {
+    margin-bottom: var(--spacing-sm);
+  }
+
+  p {
+    font-size: var(--font-size-body);
+  }
+}
+
+.step-content {
+  min-height: 400px;
+  padding: var(--spacing-lg) 0;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
