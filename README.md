@@ -2,6 +2,10 @@
 
 A modern, enterprise-grade multi-step loan application wizard built with Angular 20. This application provides a comprehensive, user-friendly interface for Australian business loan applications with automatic data persistence, form validation, and PDF receipt generation.
 
+## Live Demo
+
+**[Click here to access the app](http://enterprise-loan-wizard-app.s3-website-ap-southeast-2.amazonaws.com)**
+
 ## Features
 
 - **5-Step Wizard Interface** - Intuitive multi-step form flow with progress tracking
