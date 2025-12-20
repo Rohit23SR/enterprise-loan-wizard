@@ -65,8 +65,7 @@ enterprise-loan-wizard/
 ├── angular.json
 ├── package.json
 ├── tsconfig.json
-├── README.md
-└── CLAUDE.md                        # Detailed architecture documentation
+└── README.md
 ```
 
 ## Getting Started
@@ -278,10 +277,6 @@ When contributing to this project, please:
 3. Write tests for new features
 4. Update documentation as needed
 5. Follow the Angular style guide
-
-## Architecture Documentation
-
-For detailed architecture, design decisions, and implementation details, see [CLAUDE.md](./CLAUDE.md).
 
 ## License
 
