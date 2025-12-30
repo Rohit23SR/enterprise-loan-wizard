@@ -154,7 +154,7 @@ vercel --prod
 
 #### Method 3: One-Click Deploy
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/YOUR_USERNAME/enterprise-loan-wizard)
+[Deploy with Vercel](https://vercel.com/new/clone?repository-url=https://github.com/YOUR_USERNAME/enterprise-loan-wizard)
 
 **What you get (100% FREE):**
 - ✅ HTTPS encryption (TLS 1.3)
