@@ -44,6 +44,9 @@ Thumbs.db
 # Documentation (internal)
 CLAUDE.md
 .claude/
+DEPLOYMENT.md
+QUICKSTART.md
+SECURITY.md
 
 # Environment and secrets
 .env
@@ -54,6 +57,19 @@ CLAUDE.md
 *.p12
 credentials.json
 secrets.json
+
+# AWS/CloudFront deployment files (not needed for Vercel)
+cloudfront-security-headers.js
+deploy.bat
+deploy.sh
+.env.example
+oac-config.json
+cloudfront-config.json
+s3-bucket-policy.json
+.aws-credentials
+
+# Vercel deployment (auto-generated)
+.vercel
 
 # Temporary files
 nul

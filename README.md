@@ -4,7 +4,16 @@ A modern, enterprise-grade multi-step loan application wizard built with Angular
 
 ## Live Demo
 
-**[Click here to access the app](http://enterprise-loan-wizard-app.s3-website-ap-southeast-2.amazonaws.com)**
+> **🔒 Secure HTTPS Deployment on Vercel**
+>
+> The application is deployed securely using Vercel with:
+> - ✅ HTTPS encryption (TLS 1.3)
+> - ✅ Security headers (CSP, HSTS, X-Frame-Options, etc.)
+> - ✅ Global edge network (CDN)
+> - ✅ Automatic deployments from Git
+> - ✅ 100% FREE (Hobby tier)
+>
+> **Note:** This application handles sensitive financial data and requires HTTPS. Vercel provides enterprise-grade security for free.
 
 ## Features
 
@@ -108,6 +117,60 @@ ng build
 ```
 
 Build artifacts will be stored in the `dist/` directory with optimizations enabled.
+
+### Deploying to Production
+
+**🚀 Deploy to Vercel (FREE):**
+
+#### Method 1: Vercel Dashboard (Recommended - 2 minutes)
+
+1. **Push to GitHub:**
+   ```bash
+   git add .
+   git commit -m "Initial commit"
+   git push origin main
+   ```
+
+2. **Import to Vercel:**
+   - Go to [vercel.com/new](https://vercel.com/new)
+   - Sign up/login (free account)
+   - Click "Import Git Repository"
+   - Select your repository
+   - Click "Deploy"
+   - Done! Your app will be live at `https://your-app-name.vercel.app`
+
+#### Method 2: Vercel CLI
+
+```bash
+# Install Vercel CLI
+npm install -g vercel
+
+# Login to Vercel
+vercel login
+
+# Deploy to production
+vercel --prod
+```
+
+#### Method 3: One-Click Deploy
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/YOUR_USERNAME/enterprise-loan-wizard)
+
+**What you get (100% FREE):**
+- ✅ HTTPS encryption (TLS 1.3)
+- ✅ Security headers (CSP, HSTS, X-Frame-Options, etc.)
+- ✅ Global CDN with 300+ edge locations
+- ✅ Automatic SSL certificates
+- ✅ DDoS protection
+- ✅ Auto-deploy on Git push
+- ✅ 100GB bandwidth/month
+- ✅ Unlimited deployments
+
+**Custom Domain (Optional):**
+- Go to Vercel Dashboard → Settings → Domains
+- Add your custom domain
+- Follow DNS instructions
+- SSL automatically provisioned
 
 ### Running Tests
 
