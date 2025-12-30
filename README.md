@@ -43,7 +43,7 @@ A modern, enterprise-grade multi-step loan application wizard built with Angular
 
 ### Development Tools
 - **Angular CLI**: 20.1.0
-- **Karma & Jasmine**: Testing framework
+- **Jest**: 30.2.0 - Modern testing framework with coverage reporting
 - **SCSS**: Styling with CSS variables
 
 ## Project Structure
@@ -176,11 +176,31 @@ vercel --prod
 
 ### Running Tests
 
+The project uses Jest for unit testing with comprehensive test coverage.
+
 Execute unit tests:
 
 ```bash
-ng test
+npm test
 ```
+
+Run tests in watch mode:
+
+```bash
+npm run test:watch
+```
+
+Generate coverage report:
+
+```bash
+npm run test:coverage
+```
+
+**Test Suites:**
+- **133+ tests** covering all major components and services
+- **State Management Tests**: Comprehensive wizard state validation
+- **Component Tests**: Form validation, user interactions, lifecycle events
+- **Edge Case Testing**: Boundary conditions and error scenarios
 
 ## Application Workflow
 

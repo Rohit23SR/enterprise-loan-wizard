@@ -17,6 +17,9 @@ export class ProgressStepper {
   getStepStatus(index: number): 'completed' | 'active' | 'upcoming' | 'error' {
     const step = this.steps[index];
 
+    // Handle invalid indices
+    if (!step) return 'upcoming';
+
     // Current step should always show as active (highest priority)
     if (index === this.currentStep) return 'active';
 

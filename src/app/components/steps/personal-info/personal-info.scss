@@ -215,6 +215,10 @@
         background: white;
         padding: 0 8px;
         z-index: 2;
+        max-width: calc(100% - 70px); // Prevent overflow (52px left + 18px right margin)
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
 
         &.active {
           top: 0;
@@ -225,6 +229,11 @@
           left: 46px;
           background: white;
           z-index: 3;
+          max-width: calc(100% - 60px); // Adjusted for smaller font
+          white-space: normal; // Allow wrapping when small
+          overflow: visible;
+          text-overflow: clip;
+          line-height: 1.2;
         }
 
         .required {
@@ -243,6 +252,8 @@
         font-weight: 500;
         background: white;
         transition: all 0.3s ease;
+        position: relative;
+        z-index: 1; // Ensure input/select is above the inactive label but below active label
 
         &:hover {
           border-color: #cbd5e1;
@@ -263,6 +274,11 @@
           color: #3b82f6;
           font-weight: 600;
           left: 46px;
+          max-width: calc(100% - 60px);
+          white-space: normal;
+          overflow: visible;
+          text-overflow: clip;
+          line-height: 1.2;
         }
 
         &.error {
@@ -280,10 +296,21 @@
         background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
         background-repeat: no-repeat;
         background-position: right 16px center;
-        padding-right: 44px;
+        padding-right: 52px !important; // More space to prevent overlap with caret
+        color: #111827 !important; // Match city input color - dark always
 
+        // Style the empty placeholder option
+        option[value=""] {
+          color: #9ca3af; // Lighter gray for empty option
+        }
+
+        // Style regular options
         option {
-          padding: 8px;
+          padding: 8px 12px;
+          font-size: 1rem;
+          color: #111827; // Dark text for readability
+          background: white;
+          line-height: 1.5;
         }
       }
     }
@@ -372,7 +399,7 @@
 // Responsive
 @media (max-width: 768px) {
   .step-container {
-    padding: var(--spacing-xl) var(--spacing-sm);
+    padding: var(--spacing-xl) var(--spacing-md); // Increased from spacing-sm to spacing-md
   }
 
   .step-header {
@@ -398,5 +425,120 @@
     select {
       padding: 14px 14px 14px 48px;
     }
+  }
+}
+
+// Very small screens (mobile phones)
+@media (max-width: 480px) {
+  .step-container {
+    padding: var(--spacing-lg) var(--spacing-md); // Optimized for very small screens
+  }
+
+  .step-header {
+    .header-content {
+      padding: var(--spacing-lg) var(--spacing-sm);
+    }
+
+    h2 {
+      font-size: 1.375rem; // Slightly smaller on very small screens
+    }
+
+    .step-description {
+      font-size: 0.9375rem; // 15px
+    }
+
+    .step-indicator {
+      padding: 8px 16px;
+      gap: var(--spacing-sm);
+
+      .step-circle {
+        width: 32px;
+        height: 32px;
+        font-size: 0.875rem;
+      }
+
+      .step-badge {
+        font-size: 0.875rem;
+      }
+    }
+  }
+
+  .form-card {
+    padding: var(--spacing-lg); // Reduced from spacing-xl for more space
+    margin-bottom: var(--spacing-lg);
+
+    .card-header {
+      margin-bottom: var(--spacing-lg);
+
+      h3 {
+        font-size: 1.125rem; // Slightly smaller
+      }
+    }
+  }
+
+  .input-group {
+    margin-bottom: var(--spacing-lg); // Slightly reduced spacing
+
+    .input-wrapper {
+      .input-icon {
+        width: 40px; // Reduced from 48px
+        height: 40px;
+
+        svg {
+          width: 18px;
+          height: 18px;
+        }
+      }
+
+      &.select-wrapper {
+        .input-icon {
+          width: 40px;
+          height: 40px;
+        }
+      }
+
+      .input-content {
+        label {
+          left: 44px; // Reduced from 52px to match smaller icon
+          font-size: 1rem; // Keep consistent with desktop
+          max-width: calc(100% - 60px); // Adjusted for smaller icon
+
+          &.active {
+            left: 38px; // Adjusted for smaller icon
+            font-size: 0.75rem; // Keep consistent with desktop
+            max-width: calc(100% - 50px);
+            white-space: normal;
+            overflow: visible;
+            line-height: 1.2;
+          }
+        }
+
+        input,
+        select {
+          padding: 12px 14px 12px 44px; // Reduced left padding to match smaller icon
+          font-size: 1rem; // Keep consistent with desktop
+
+          &:focus + label,
+          &.filled + label,
+          &:not(:placeholder-shown) + label {
+            left: 38px;
+            font-size: 0.75rem;
+            max-width: calc(100% - 50px);
+            white-space: normal;
+            overflow: visible;
+            line-height: 1.2;
+          }
+        }
+
+        select {
+          padding-right: 48px !important; // Ensure space for caret on mobile
+        }
+      }
+    }
+  }
+
+  .error-message {
+    font-size: 0.8125rem; // Slightly smaller error text
+    padding: var(--spacing-xs) var(--spacing-sm);
   }
 }

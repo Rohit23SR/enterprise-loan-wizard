@@ -11,14 +11,31 @@
   left: 0;
   right: 0;
   z-index: 10;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05); // Add subtle shadow for better separation
 
   @media (max-width: 768px) {
-    padding: var(--spacing-md);
+    padding: var(--spacing-md) var(--spacing-lg); // Increased horizontal padding
     flex-direction: column;
     gap: var(--spacing-sm);
 
     .btn {
       width: 100%;
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: var(--spacing-sm) var(--spacing-md); // Optimized for very small screens
+
+    .btn {
+      width: 100%;
+      padding: 10px 16px; // Slightly reduced padding
+      font-size: 0.9375rem; // 15px
+      height: 42px; // Slightly smaller height
+
+      svg {
+        width: 18px;
+        height: 18px;
+      }
     }
   }
 
@@ -30,6 +47,10 @@
     @media (max-width: 768px) {
       width: 100%;
       justify-content: center;
+    }
+
+    @media (max-width: 480px) {
+      gap: var(--spacing-sm);
     }
   }
 

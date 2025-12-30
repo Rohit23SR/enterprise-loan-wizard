@@ -74,3 +74,8 @@ s3-bucket-policy.json
 # Temporary files
 nul
 test.jpg
+e1.jpg
+*.jpg
+*.jpeg
+*.png
+screenshot*.png

@@ -351,10 +351,14 @@
 // Responsive
 @media (max-width: 768px) {
   .step-container {
-    padding: var(--spacing-xl) var(--spacing-sm);
+    padding: var(--spacing-xl) var(--spacing-md); // Increased from spacing-sm to spacing-md
   }
 
   .step-header {
+    .header-content {
+      padding: var(--spacing-xl) var(--spacing-md);
+    }
+
     h2 {
       font-size: 1.5rem;
     }
@@ -386,5 +390,117 @@
 
   .info-box {
     flex-direction: column;
+  }
+}
+
+// Very small screens (mobile phones)
+@media (max-width: 480px) {
+  .step-container {
+    padding: var(--spacing-lg) var(--spacing-md);
+  }
+
+  .step-header {
+    .header-content {
+      padding: var(--spacing-lg) var(--spacing-sm);
+    }
+
+    h2 {
+      font-size: 1.375rem;
+    }
+
+    .step-description {
+      font-size: 0.9375rem;
+    }
+
+    .step-indicator {
+      padding: 6px 16px;
+
+      .step-circle {
+        width: 28px;
+        height: 28px;
+        font-size: 0.75rem;
+      }
+
+      .step-badge {
+        font-size: 0.8125rem;
+      }
+    }
+  }
+
+  .form-group {
+    padding: var(--spacing-lg);
+    margin-bottom: 0;
+
+    label {
+      font-size: 1rem;
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .helper-text {
+      font-size: 0.8125rem;
+      margin-bottom: var(--spacing-md);
+    }
+  }
+
+  .file-upload-wrapper {
+    .file-label {
+      padding: var(--spacing-lg);
+      font-size: 0.9375rem;
+      gap: var(--spacing-sm);
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+
+  .file-list {
+    padding: var(--spacing-sm);
+    margin-top: var(--spacing-sm);
+  }
+
+  .file-item {
+    padding: var(--spacing-sm);
+    margin-bottom: var(--spacing-xs);
+
+    .file-name {
+      font-size: 0.875rem;
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .file-size {
+      font-size: 0.75rem;
+      padding: 2px 8px;
+    }
+
+    .remove-btn {
+      padding: 6px 12px;
+      font-size: 0.8125rem;
+    }
+  }
+
+  .info-box {
+    padding: var(--spacing-md);
+    margin-top: var(--spacing-md);
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    strong {
+      font-size: 0.9375rem;
+    }
+
+    ul li {
+      font-size: 0.8125rem;
+      margin-bottom: 4px;
+    }
+  }
+
+  .error-message {
+    font-size: 0.8125rem;
+    padding: var(--spacing-xs) var(--spacing-sm);
   }
 }

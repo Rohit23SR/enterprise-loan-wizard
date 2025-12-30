@@ -180,6 +180,22 @@ textarea {
   }
 }
 
+// Global select option styling
+select {
+  option {
+    padding: 10px 12px;
+    font-size: var(--font-size-body);
+    line-height: 1.4;
+    color: var(--color-gray-900);
+    background-color: var(--color-white);
+
+    &:checked,
+    &:hover {
+      background-color: var(--color-primary-light);
+    }
+  }
+}
+
 textarea {
   height: auto;
   min-height: 100px;

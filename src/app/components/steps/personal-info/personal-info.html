@@ -292,15 +292,18 @@
               </svg>
             </div>
             <div class="input-content">
+              <label for="state" [class.active]="personalForm.get('state')?.value || personalForm.get('state')?.touched">
+                State/Territory <span class="required">*</span>
+              </label>
               <select
                 id="state"
                 formControlName="state"
                 [class.error]="isFieldInvalid('state')"
                 [class.filled]="personalForm.get('state')?.value"
+                required
                 aria-required="true"
-                aria-label="State/Territory"
               >
-                <option value="">Select State/Territory</option>
+                <option value=""></option>
                 @for (state of states; track state.code) {
                   <option [value]="state.code">{{ state.name }}</option>
                 }
@@ -363,15 +366,18 @@
               </svg>
             </div>
             <div class="input-content">
+              <label for="country" [class.active]="personalForm.get('country')?.value || personalForm.get('country')?.touched">
+                Country <span class="required">*</span>
+              </label>
               <select
                 id="country"
                 formControlName="country"
                 [class.error]="isFieldInvalid('country')"
                 [class.filled]="personalForm.get('country')?.value"
+                required
                 aria-required="true"
-                aria-label="Country"
               >
-                <option value="">Select Country</option>
+                <option value=""></option>
                 @for (country of countries; track country.code) {
                   <option [value]="country.code">{{ country.name }}</option>
                 }
