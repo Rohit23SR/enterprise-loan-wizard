@@ -11,11 +11,17 @@
           <div class="step-circle" [class]="getStepStatus(i)">
             @if (getStepStatus(i) === 'completed') {
               <svg class="checkmark" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M13.3334 4L6.00002 11.3333L2.66669 8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path
+                  d="M13.3334 4L6.00002 11.3333L2.66669 8"
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
               </svg>
             } @else if (getStepStatus(i) === 'error') {
               <svg class="error-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M8 4V8M8 12H8.01" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                <path d="M8 4V8M8 12H8.01" stroke="white" stroke-width="2" stroke-linecap="round" />
               </svg>
             } @else {
               <span class="step-number">{{ step.id }}</span>
@@ -23,7 +29,10 @@
           </div>
 
           @if (i < steps.length - 1) {
-            <div class="step-line" [class.completed]="steps[i + 1].completed || i + 1 === currentStep"></div>
+            <div
+              class="step-line"
+              [class.completed]="steps[i + 1].completed || i + 1 === currentStep"
+            ></div>
           }
         </div>
 

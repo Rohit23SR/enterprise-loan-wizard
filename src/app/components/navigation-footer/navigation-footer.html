@@ -4,7 +4,9 @@
     class="btn btn-secondary"
     (click)="onBack()"
     [disabled]="isFirstStep"
-    [attr.aria-label]="isFirstStep ? 'Back button disabled (first step)' : 'Go back to previous step'"
+    [attr.aria-label]="
+      isFirstStep ? 'Back button disabled (first step)' : 'Go back to previous step'
+    "
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"

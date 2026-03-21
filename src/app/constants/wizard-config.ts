@@ -1,0 +1,9 @@
+export const AUTO_SAVE_INTERVAL_MS = 30_000
+export const STORAGE_EXPIRATION_DAYS = 7
+export const MIN_BANK_STATEMENTS = 3
+export const MIN_TAX_RETURNS = 2
+export const MIN_LOAN_AMOUNT = 1_000
+export const WIZARD_STORAGE_KEY = 'enterprise-loan-wizard-data'
+export const SUBMITTED_APP_STORAGE_KEY = 'last-submitted-application'
+export const PDF_PRIMARY_COLOR = { r: 79, g: 70, b: 229 } as const
+export const PDF_GRAY_COLOR = { r: 100, g: 100, b: 100 } as const

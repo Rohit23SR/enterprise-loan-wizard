@@ -33,7 +33,8 @@
         <div class="review-item">
           <span class="review-label">Address:</span>
           <span class="review-value">
-            {{ personalInfo.streetAddress }}, {{ personalInfo.city }}, {{ personalInfo.state }} {{ personalInfo.postcode }}
+            {{ personalInfo.streetAddress }}, {{ personalInfo.city }}, {{ personalInfo.state }}
+            {{ personalInfo.postcode }}
           </span>
         </div>
       </div>
@@ -129,7 +130,9 @@
         </div>
         <div class="review-item">
           <span class="review-label">Business Registration:</span>
-          <span class="review-value">{{ getFileCount(documents.businessRegistration) }} file(s)</span>
+          <span class="review-value"
+            >{{ getFileCount(documents.businessRegistration) }} file(s)</span
+          >
         </div>
         <div class="review-item">
           <span class="review-label">Bank Statements:</span>
@@ -151,27 +154,23 @@
     <!-- Certifications and Consents -->
     <div class="confirmation-section">
       <h3>Final Confirmation</h3>
-      <p>Please review all information above carefully before submitting. By checking the boxes below, you confirm your agreement to proceed with this loan application.</p>
+      <p>
+        Please review all information above carefully before submitting. By checking the boxes
+        below, you confirm your agreement to proceed with this loan application.
+      </p>
 
       <form [formGroup]="reviewForm" class="consent-form">
         <div class="checkbox-wrapper">
-          <input
-            id="certifyAccurate"
-            type="checkbox"
-            formControlName="certifyAccurate"
-          />
+          <input id="certifyAccurate" type="checkbox" formControlName="certifyAccurate" />
           <label for="certifyAccurate">
-            I certify that all information provided in this application is true, accurate, and complete to the best of my knowledge.
+            I certify that all information provided in this application is true, accurate, and
+            complete to the best of my knowledge.
             <span class="required">*</span>
           </label>
         </div>
 
         <div class="checkbox-wrapper">
-          <input
-            id="agreeToTerms"
-            type="checkbox"
-            formControlName="agreeToTerms"
-          />
+          <input id="agreeToTerms" type="checkbox" formControlName="agreeToTerms" />
           <label for="agreeToTerms">
             I have read, understand, and agree to the Terms and Conditions and Privacy Policy.
             <span class="required">*</span>
@@ -179,13 +178,10 @@
         </div>
 
         <div class="checkbox-wrapper">
-          <input
-            id="consentToCreditCheck"
-            type="checkbox"
-            formControlName="consentToCreditCheck"
-          />
+          <input id="consentToCreditCheck" type="checkbox" formControlName="consentToCreditCheck" />
           <label for="consentToCreditCheck">
-            I authorize the lender to obtain my credit report and verify the information provided in this application.
+            I authorize the lender to obtain my credit report and verify the information provided in
+            this application.
             <span class="required">*</span>
           </label>
         </div>
@@ -193,7 +189,9 @@
         @if (reviewForm.touched && !reviewForm.valid) {
           <div class="alert-box" role="alert">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+              />
             </svg>
             <p>You must agree to all certifications and consents to submit your application.</p>
           </div>
@@ -204,11 +202,17 @@
     <div class="next-steps-section">
       <div class="next-steps-content">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="info-icon">
-          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+          <path
+            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+          />
         </svg>
         <div class="next-steps-text">
           <strong class="next-steps-title">What happens next?</strong>
-          <p class="next-steps-description">After submitting your application, our team will review your information within 1-2 business days. You'll receive an email notification with the status of your application and any next steps.</p>
+          <p class="next-steps-description">
+            After submitting your application, our team will review your information within 1-2
+            business days. You'll receive an email notification with the status of your application
+            and any next steps.
+          </p>
         </div>
       </div>
     </div>

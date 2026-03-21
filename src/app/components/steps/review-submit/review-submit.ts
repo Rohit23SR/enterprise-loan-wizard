@@ -1,9 +1,15 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Subject, takeUntil } from 'rxjs';
-import { trigger, transition, style, animate } from '@angular/animations';
-import { WizardState, WizardFormData } from '../../../services/wizard-state';
+import { Component, OnInit, OnDestroy } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'
+import { Subject, takeUntil } from 'rxjs'
+import { trigger, transition, style, animate } from '@angular/animations'
+import { WizardState, WizardFormData } from '../../../services/wizard-state'
+import {
+  formatCurrencyAUD,
+  formatDateAU,
+  maskTFN as maskTFNUtil,
+  maskABN as maskABNUtil,
+} from '../../../utils/formatting'
 
 @Component({
   selector: 'app-review-submit',
@@ -21,9 +27,9 @@ import { WizardState, WizardFormData } from '../../../services/wizard-state';
   ],
 })
 export class ReviewSubmit implements OnInit, OnDestroy {
-  reviewForm!: FormGroup;
-  private destroy$ = new Subject<void>();
-  applicationData!: WizardFormData;
+  reviewForm!: FormGroup
+  private destroy$ = new Subject<void>()
+  applicationData!: WizardFormData
 
   constructor(
     private fb: FormBuilder,
@@ -31,15 +37,15 @@ export class ReviewSubmit implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.initializeForm();
-    this.loadApplicationData();
-    this.loadSavedData();
-    this.setupFormSubscription();
+    this.initializeForm()
+    this.loadApplicationData()
+    this.loadSavedData()
+    this.setupFormSubscription()
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    this.destroy$.next()
+    this.destroy$.complete()
   }
 
   private initializeForm(): void {
@@ -47,88 +53,72 @@ export class ReviewSubmit implements OnInit, OnDestroy {
       certifyAccurate: [false, [Validators.requiredTrue]],
       agreeToTerms: [false, [Validators.requiredTrue]],
       consentToCreditCheck: [false, [Validators.requiredTrue]],
-    });
+    })
   }
 
   private loadApplicationData(): void {
-    this.applicationData = this.wizardState.getFormData();
+    this.applicationData = this.wizardState.getFormData()
   }
 
   private loadSavedData(): void {
-    const formData = this.wizardState.getFormData();
+    const formData = this.wizardState.getFormData()
     if (formData.review && Object.keys(formData.review).length > 0) {
-      this.reviewForm.patchValue(formData.review);
+      this.reviewForm.patchValue(formData.review)
     }
   }
 
   private setupFormSubscription(): void {
-    this.reviewForm.valueChanges
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((values) => {
-        this.wizardState.updateFormData('review', values);
-      });
+    this.reviewForm.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((values) => {
+      this.wizardState.updateFormData('review', values)
+    })
   }
 
   getFormData() {
-    return this.reviewForm.value;
+    return this.reviewForm.value
   }
 
   isFormValid(): boolean {
-    return this.reviewForm.valid;
+    return this.reviewForm.valid
   }
 
   markAllAsTouched(): void {
-    this.reviewForm.markAllAsTouched();
+    this.reviewForm.markAllAsTouched()
   }
 
   // Helper methods for displaying data
   get personalInfo() {
-    return this.applicationData.personalInfo;
+    return this.applicationData.personalInfo
   }
 
   get businessInfo() {
-    return this.applicationData.businessInfo;
+    return this.applicationData.businessInfo
   }
 
   get financialDetails() {
-    return this.applicationData.financialDetails;
+    return this.applicationData.financialDetails
   }
 
   get documents() {
-    return this.applicationData.documents;
+    return this.applicationData.documents
   }
 
   formatCurrency(amount: number | undefined): string {
-    if (!amount) return '$0.00';
-    return new Intl.NumberFormat('en-AU', {
-      style: 'currency',
-      currency: 'AUD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(amount);
+    return formatCurrencyAUD(amount)
   }
 
   formatDate(dateString: string | undefined): string {
-    if (!dateString) return 'N/A';
-    const date = new Date(dateString);
-    return new Intl.DateTimeFormat('en-AU', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    }).format(date);
+    return formatDateAU(dateString)
   }
 
   maskTFN(tfn: string | undefined): string {
-    if (!tfn) return 'N/A';
-    return `*** *** ${tfn.slice(-3)}`;
+    return maskTFNUtil(tfn)
   }
 
   maskABN(abn: string | undefined): string {
-    if (!abn) return 'N/A';
-    return `** *** *** ${abn.slice(-3)}`;
+    return maskABNUtil(abn)
   }
 
   getFileCount(files: File[] | undefined): number {
-    return files?.length || 0;
+    return files?.length || 0
   }
 }

@@ -1,6 +1,6 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { WizardStep } from '../../services/wizard-state';
+import { Component, Input, Output, EventEmitter } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { WizardStep } from '../../services/wizard-state'
 
 @Component({
   selector: 'app-progress-stepper',
@@ -10,37 +10,37 @@ import { WizardStep } from '../../services/wizard-state';
   styleUrl: './progress-stepper.scss',
 })
 export class ProgressStepper {
-  @Input() steps: WizardStep[] = [];
-  @Input() currentStep: number = 0;
-  @Output() stepClick = new EventEmitter<number>();
+  @Input() steps: WizardStep[] = []
+  @Input() currentStep: number = 0
+  @Output() stepClick = new EventEmitter<number>()
 
   getStepStatus(index: number): 'completed' | 'active' | 'upcoming' | 'error' {
-    const step = this.steps[index];
+    const step = this.steps[index]
 
     // Handle invalid indices
-    if (!step) return 'upcoming';
+    if (!step) return 'upcoming'
 
     // Current step should always show as active (highest priority)
-    if (index === this.currentStep) return 'active';
+    if (index === this.currentStep) return 'active'
 
     // Error state for steps with validation errors
-    if (step.hasErrors) return 'error';
+    if (step.hasErrors) return 'error'
 
     // Completed state for successfully validated previous steps
-    if (step.completed) return 'completed';
+    if (step.completed) return 'completed'
 
     // Default state for future steps
-    return 'upcoming';
+    return 'upcoming'
   }
 
   onStepClick(index: number): void {
     // Allow clicking on completed steps to go back
     if (index < this.currentStep) {
-      this.stepClick.emit(index);
+      this.stepClick.emit(index)
     }
   }
 
   isStepClickable(index: number): boolean {
-    return index < this.currentStep;
+    return index < this.currentStep
   }
 }

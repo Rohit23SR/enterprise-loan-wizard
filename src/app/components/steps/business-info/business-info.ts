@@ -1,10 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { NgxMaskDirective } from 'ngx-mask';
-import { Subject, takeUntil } from 'rxjs';
-import { trigger, transition, style, animate } from '@angular/animations';
-import { WizardState } from '../../../services/wizard-state';
+import { Component, OnInit, OnDestroy } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'
+import { NgxMaskDirective } from 'ngx-mask'
+import { Subject, takeUntil } from 'rxjs'
+import { trigger, transition, style, animate } from '@angular/animations'
+import { WizardState } from '../../../services/wizard-state'
+import { AUSTRALIAN_STATES } from '../../../constants/australian-data'
 
 @Component({
   selector: 'app-business-info',
@@ -22,8 +23,8 @@ import { WizardState } from '../../../services/wizard-state';
   ],
 })
 export class BusinessInfo implements OnInit, OnDestroy {
-  businessForm!: FormGroup;
-  private destroy$ = new Subject<void>();
+  businessForm!: FormGroup
+  private destroy$ = new Subject<void>()
 
   businessTypes = [
     'Sole Proprietorship',
@@ -31,8 +32,8 @@ export class BusinessInfo implements OnInit, OnDestroy {
     'LLC',
     'Corporation',
     'S-Corporation',
-    'Non-Profit'
-  ];
+    'Non-Profit',
+  ]
 
   industries = [
     'Retail',
@@ -44,23 +45,12 @@ export class BusinessInfo implements OnInit, OnDestroy {
     'Professional Services',
     'Real Estate',
     'Transportation',
-    'Other'
-  ];
+    'Other',
+  ]
 
-  states = [
-    { code: 'NSW', name: 'New South Wales' },
-    { code: 'VIC', name: 'Victoria' },
-    { code: 'QLD', name: 'Queensland' },
-    { code: 'WA', name: 'Western Australia' },
-    { code: 'SA', name: 'South Australia' },
-    { code: 'TAS', name: 'Tasmania' },
-    { code: 'ACT', name: 'Australian Capital Territory' },
-    { code: 'NT', name: 'Northern Territory' },
-  ];
+  states = AUSTRALIAN_STATES
 
-  countries = [
-    { code: 'AU', name: 'Australia' },
-  ];
+  countries = [{ code: 'AU', name: 'Australia' }]
 
   constructor(
     private fb: FormBuilder,
@@ -68,15 +58,15 @@ export class BusinessInfo implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.initializeForm();
-    this.loadSavedData();
-    this.setupFormSubscription();
-    this.setupConditionalValidation();
+    this.initializeForm()
+    this.loadSavedData()
+    this.setupFormSubscription()
+    this.setupConditionalValidation()
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    this.destroy$.next()
+    this.destroy$.complete()
   }
 
   private initializeForm(): void {
@@ -95,62 +85,67 @@ export class BusinessInfo implements OnInit, OnDestroy {
       annualRevenue: [null, [Validators.required, Validators.min(0)]],
       numberOfEmployees: [null, [Validators.required, Validators.min(0)]],
       businessDescription: ['', [Validators.required, Validators.maxLength(500)]],
-    });
+    })
   }
 
   private setupConditionalValidation(): void {
-    this.businessForm.get('sameAsPersonal')?.valueChanges
-      .pipe(takeUntil(this.destroy$))
+    this.businessForm
+      .get('sameAsPersonal')
+      ?.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe((sameAsPersonal) => {
-        const addressFields = ['businessStreet', 'businessCity', 'businessState', 'businessPostcode', 'businessCountry'];
+        const addressFields = [
+          'businessStreet',
+          'businessCity',
+          'businessState',
+          'businessPostcode',
+          'businessCountry',
+        ]
 
         if (sameAsPersonal) {
-          addressFields.forEach(field => {
-            this.businessForm.get(field)?.clearValidators();
-            this.businessForm.get(field)?.updateValueAndValidity();
-          });
+          addressFields.forEach((field) => {
+            this.businessForm.get(field)?.clearValidators()
+            this.businessForm.get(field)?.updateValueAndValidity()
+          })
         } else {
-          addressFields.forEach(field => {
-            this.businessForm.get(field)?.setValidators([Validators.required]);
-            this.businessForm.get(field)?.updateValueAndValidity();
-          });
+          addressFields.forEach((field) => {
+            this.businessForm.get(field)?.setValidators([Validators.required])
+            this.businessForm.get(field)?.updateValueAndValidity()
+          })
         }
-      });
+      })
   }
 
   private loadSavedData(): void {
-    const formData = this.wizardState.getFormData();
+    const formData = this.wizardState.getFormData()
     if (formData.businessInfo && Object.keys(formData.businessInfo).length > 0) {
-      this.businessForm.patchValue(formData.businessInfo);
+      this.businessForm.patchValue(formData.businessInfo)
     }
   }
 
   private setupFormSubscription(): void {
-    this.businessForm.valueChanges
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((values) => {
-        this.wizardState.updateFormData('businessInfo', values);
-      });
+    this.businessForm.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((values) => {
+      this.wizardState.updateFormData('businessInfo', values)
+    })
   }
 
   isFieldInvalid(fieldName: string): boolean {
-    const field = this.businessForm.get(fieldName);
-    return !!(field && field.invalid && (field.dirty || field.touched));
+    const field = this.businessForm.get(fieldName)
+    return !!(field && field.invalid && (field.dirty || field.touched))
   }
 
   getCharCount(): number {
-    return this.businessForm.get('businessDescription')?.value?.length || 0;
+    return this.businessForm.get('businessDescription')?.value?.length || 0
   }
 
   getFormData() {
-    return this.businessForm.value;
+    return this.businessForm.value
   }
 
   isFormValid(): boolean {
-    return this.businessForm.valid;
+    return this.businessForm.valid
   }
 
   markAllAsTouched(): void {
-    this.businessForm.markAllAsTouched();
+    this.businessForm.markAllAsTouched()
   }
 }
