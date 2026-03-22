@@ -78,4 +78,5 @@ e1.jpg
 *.jpg
 *.jpeg
 *.png
+!preview.png
 screenshot*.png
