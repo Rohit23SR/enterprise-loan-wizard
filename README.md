@@ -1,129 +1,184 @@
+<div align="center">
+
 # Enterprise Loan Wizard
 
-A multi-step loan application wizard built with Angular 20 for the Australian market. Walks users through 5 steps — personal info, business details, financials, document upload, and review — with auto-save, real-time validation, and PDF receipt generation.
+### A 5-step loan application wizard built for the Australian market
 
-## Live Demo
+Multi-step form with real-time validation, auto-save, Australian TFN/ABN masking, and PDF receipt generation.
 
-[https://enterprise-loan-wizard.vercel.app](https://enterprise-loan-wizard.vercel.app)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-enterprise--loan--wizard.vercel.app-blue?style=for-the-badge&logo=vercel)](https://enterprise-loan-wizard.vercel.app)
 
-## What it does
+[![Angular](https://img.shields.io/badge/Angular-20-DD0031?style=flat-square&logo=angular)](https://angular.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
+[![SCSS](https://img.shields.io/badge/SCSS-CSS_Variables-CC6699?style=flat-square&logo=sass)](https://sass-lang.com/)
+[![Jest](https://img.shields.io/badge/Jest-332_tests-C21325?style=flat-square&logo=jest)](https://jestjs.io/)
 
-Five-step wizard for enterprise loan applications:
+</div>
 
-1. **Personal Info** — Name, email, phone, DOB (18+ check), TFN (9-digit masked), Australian address
-2. **Business Info** — Business name, type, ABN (11-digit masked), industry, revenue, employees, optional separate address
-3. **Financial Details** — Loan amount (min $1,000), purpose, term, monthly revenue/expenses, credit score, optional collateral
-4. **Document Upload** — Government ID (1+), business registration (1+), bank statements (3+), tax returns (2+)
-5. **Review & Submit** — Read-only summary with masked sensitive data, three consent checkboxes, PDF receipt on submit
+---
 
-Auto-saves every 30 seconds to localStorage with 7-day expiration. Files can't be persisted across refreshes.
+<div align="center">
+  <img src="preview.png" alt="Enterprise Loan Wizard — Step 1" width="100%" />
+</div>
+
+---
+
+## The 5 Steps
+
+| Step | What's Collected |
+|:-----|:-----------------|
+| **1. Personal Info** | Name, email, phone, DOB (18+ check), TFN (9-digit masked), full Australian address |
+| **2. Business Info** | Business name, type, ABN (11-digit masked), industry, revenue, employees, optional separate address |
+| **3. Financial Details** | Loan amount (min $1,000), purpose, term, monthly revenue/expenses, credit score, optional collateral |
+| **4. Documents** | Government ID (1+), business registration (1+), bank statements (3+), tax returns (2+) |
+| **5. Review & Submit** | Read-only summary with masked TFN/ABN, three consent checkboxes, PDF receipt on submit |
+
+---
 
 ## Tech Stack
 
-| What | How |
-|------|-----|
-| Framework | Angular 20 (Standalone Components) |
-| Language | TypeScript 5.8 (strict mode) |
-| State | Angular Signals + RxJS BehaviorSubject + localStorage |
-| Forms | Angular Reactive Forms |
-| Masking | ngx-mask (TFN, ABN, phone, postcode) |
-| PDF | jsPDF |
-| Styling | SCSS with CSS Variables (no frameworks) |
-| Testing | Jest 30 + jest-preset-angular |
-| Deployment | Vercel |
+| Layer | Technology |
+|:------|:-----------|
+| **Framework** | Angular 20 (Standalone Components) |
+| **Language** | TypeScript 5.8 (strict mode) |
+| **State** | Angular Signals + RxJS BehaviorSubject + localStorage |
+| **Forms** | Angular Reactive Forms (FormBuilder) |
+| **Input Masking** | ngx-mask 20 (TFN, ABN, phone, postcode) |
+| **PDF** | jsPDF 3 (multi-page receipts with masked sensitive data) |
+| **Animations** | Angular Animations (fade-in transitions between steps) |
+| **Styling** | SCSS with CSS Variables — custom design system, no frameworks |
+| **Testing** | Jest 30 + jest-preset-angular 16 |
+| **Deployment** | Vercel (security headers via vercel.json) |
 
-## Getting Started
+---
 
-```bash
-git clone <repo-url>
-cd enterprise-loan-wizard
-npm install
-npm start
+## Key Features
+
+| Feature | Details |
+|:--------|:--------|
+| **Auto-Save** | Saves to localStorage every 30 seconds with 7-day expiration |
+| **Real-Time Validation** | Field-level errors on blur, step-level validation on continue |
+| **Conditional Fields** | "Same as personal address" toggle, "Has collateral" toggle |
+| **Input Masking** | TFN: `000 000 000`, ABN: `00 000 000 000`, Phone: `0000 000 000` |
+| **PDF Receipt** | Multi-page PDF with masked sensitive data, generated client-side |
+| **Progress Tracking** | Visual stepper with completed/current/upcoming states |
+| **Australian Locale** | AUD currency, AU states, 4-digit postcodes, AU date format |
+| **Responsive** | Mobile-first, touch-friendly (44px min targets), 16px inputs |
+
+---
+
+## Architecture
+
+```
+Container-Presenter Pattern
+───────────────────────────
+
+Wizard (container)          ← Orchestrates state, navigation, submission
+├── ProgressStepper         ← Visual step indicator (completed/active/upcoming)
+├── Step Components         ← Presentational: render forms, emit data
+│   ├── PersonalInfo
+│   ├── BusinessInfo
+│   ├── FinancialDetails
+│   ├── DocumentUpload
+│   └── ReviewSubmit
+└── NavigationFooter        ← Back/Next/Submit with conditional visibility
+
+State: WizardState Service (428 lines)
+├── Angular Signals         → currentStep, isFirstStep, isLastStep, progress
+├── RxJS BehaviorSubject    → formData$ (complex form data stream)
+└── localStorage            → persistence (30s auto-save, 7-day expiry)
 ```
 
-Open [http://localhost:4200](http://localhost:4200).
-
-## Scripts
-
-```bash
-npm start              # dev server (ng serve)
-npm run build          # production build
-npm test               # run all tests
-npm run test:watch     # watch mode
-npm run test:coverage  # coverage report
-
-npm run lint           # eslint check
-npm run lint:fix       # eslint auto-fix
-npm run format         # prettier format
-npm run format:check   # check formatting
-```
+---
 
 ## Project Structure
 
 ```
 src/app/
 ├── components/
-│   ├── wizard/              main orchestrator (container component)
-│   ├── progress-stepper/    visual step indicator
-│   ├── navigation-footer/   back/next/submit buttons
-│   ├── success-screen/      post-submission + PDF generation
+│   ├── wizard/                 Container component (orchestrator)
+│   ├── progress-stepper/       Visual step indicator
+│   ├── navigation-footer/      Back / Next / Submit buttons
+│   ├── success-screen/         Post-submission + PDF download
 │   └── steps/
-│       ├── personal-info/   step 1: personal details, TFN, address
-│       ├── business-info/   step 2: business details, ABN, revenue
-│       ├── financial-details/ step 3: loan amount, collateral
-│       ├── document-upload/ step 4: file uploads with min counts
-│       └── review-submit/   step 5: review all, consent checkboxes
+│       ├── personal-info/      Step 1
+│       ├── business-info/      Step 2
+│       ├── financial-details/  Step 3
+│       ├── document-upload/    Step 4
+│       └── review-submit/      Step 5
 ├── services/
-│   └── wizard-state.ts      centralized state (signals + rxjs + localStorage)
+│   └── wizard-state.ts         Centralized state (Signals + RxJS + localStorage)
 ├── constants/
-│   ├── australian-data.ts   shared AU states, country data
-│   └── wizard-config.ts     timing, storage keys, min file counts, PDF colors
-├── utils/
-│   └── formatting.ts        currency (AUD), date, TFN/ABN masking
-├── app.routes.ts             2 routes (/, /success)
-└── app.config.ts
+│   ├── australian-data.ts      Shared AU states, country data
+│   └── wizard-config.ts        Auto-save interval, storage keys, min file counts
+└── utils/
+    └── formatting.ts           Currency (AUD), date, TFN/ABN masking
 ```
+
+---
 
 ## Testing
 
-332 tests across 10 spec files. Covers the state service, all step components, navigation footer, and success screen.
+**332 tests** across 10 spec files covering the full wizard lifecycle.
 
 ```bash
-npm test               # run all 332 tests
-npm run test:coverage  # generate coverage report
+npm test                 # run all tests
+npm run test:coverage    # with coverage report
 ```
 
-What's tested:
-- **Wizard state** — initialization, form updates, navigation, localStorage persistence, auto-save, validation, submission (128 tests)
-- **Step components** — form rendering, field validation, conditional logic (sameAsPersonal, hasCollateral), data binding
-- **Document upload** — file add/remove, min count validation, file size formatting
-- **Review & submit** — checkbox validation, data masking, formatting methods
-- **Navigation footer** — button states, event emission, disabled states
-- **Success screen** — PDF generation (mocked), localStorage loading, error handling, cleanup
-- **Progress stepper** — step status, clickability, edge cases
+| File | Tests | Coverage |
+|:-----|------:|:---------|
+| wizard-state.spec | ~128 | State, navigation, persistence, auto-save, validation, submission |
+| personal-info.spec | ~40 | Form validation, age check, TFN masking, AU formats |
+| business-info.spec | ~35 | Conditional address validation, ABN, shared states |
+| financial-details.spec | ~30 | Loan min, collateral toggle, dropdown options |
+| document-upload.spec | ~35 | File add/remove, min counts, file size formatting |
+| review-submit.spec | ~25 | Checkboxes (requiredTrue), masking methods |
+| navigation-footer.spec | ~24 | Button states, event emission, disabled logic |
+| success-screen.spec | ~22 | PDF mock, localStorage, error handling, cleanup |
+| progress-stepper.spec | ~32 | Step status, clickability, edge cases |
+| app.spec | 2 | Root component rendering |
 
-## Australian Localization
+---
 
-- TFN: 9 digits, masked display (`*** *** 789`)
-- ABN: 11 digits, masked display (`** *** *** 901`)
-- Phone: 10 digits (`0412 345 678`)
-- Postcode: 4 digits
-- States: all 8 (NSW, VIC, QLD, WA, SA, TAS, ACT, NT)
-- Currency: AUD (Intl.NumberFormat)
-- Dates: Australian format
+## Getting Started
 
-## Architecture
+```bash
+git clone https://github.com/Rohit23SR/enterprise-loan-wizard.git
+cd enterprise-loan-wizard
+npm install
+npm start                # http://localhost:4200
+```
 
-Container-presenter pattern with hybrid state management:
-- **Signals** for reactive UI state (currentStep, progress, computed properties)
-- **BehaviorSubject** for complex form data
-- **localStorage** for persistence (30s auto-save, 7-day expiry)
-- **takeUntil** pattern for subscription cleanup in all components
-- No backend — submission simulated client-side, reference number generated locally
+No backend required — submission is simulated client-side. All data stays in the browser.
 
-## Deployment
+---
 
-Deployed on Vercel with auto-deploy from git. Security headers configured in `vercel.json` (CSP, HSTS, X-Frame-Options, X-XSS-Protection).
+## Scripts
+
+| Command | Description |
+|:--------|:------------|
+| `npm start` | Dev server (ng serve) |
+| `npm run build` | Production build |
+| `npm test` | Run all 332 tests |
+| `npm run test:coverage` | Coverage report |
+| `npm run lint` | ESLint check |
+| `npm run format` | Prettier format |
+
+---
+
+## Security Headers (Vercel)
+
+```
+X-Content-Type-Options:    nosniff
+X-Frame-Options:           DENY
+X-XSS-Protection:          1; mode=block
+Referrer-Policy:           strict-origin-when-cross-origin
+Strict-Transport-Security: max-age=31536000
+Content-Security-Policy:   configured
+```
+
+---
 
 ## License
 
