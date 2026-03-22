@@ -41,12 +41,6 @@ testem.log
 .DS_Store
 Thumbs.db
 
-# Documentation (internal)
-CLAUDE.md
-.claude/
-DEPLOYMENT.md
-QUICKSTART.md
-SECURITY.md
 
 # Environment and secrets
 .env
